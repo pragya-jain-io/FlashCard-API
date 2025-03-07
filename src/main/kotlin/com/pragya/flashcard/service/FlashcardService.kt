@@ -13,7 +13,23 @@ class FlashcardService( private val flashcardRepository: FlashcardRepository) {
 
     fun getAllFlashcards(): Flux<Flashcard> = flashcardRepository.findAll()
 
-    fun getFlashcardById(id: String): Mono<Flashcard> = flashcardRepository.findById(id)
+//    fun getFlashcardById(id: String): Mono<Flashcard> = flashcardRepository.findById(id)
+
+    fun getFlashcardById(id: String): Mono<Flashcard> {
+        return flashcardRepository.findById(id)
+            .flatMap { flashcard ->
+                flashcard.successAttempts++
+                flashcardRepository.save(flashcard)
+            }
+            .switchIfEmpty(
+                Mono.defer {
+                    println("Flashcard not found: $id")
+                    Mono.empty<Flashcard>() // Returns an empty Mono instead of throwing an error
+                }
+            )
+
+    }
+
 
     fun createFlashcard(flashcard: Flashcard): Mono<Flashcard> = flashcardRepository.save(flashcard)
 
