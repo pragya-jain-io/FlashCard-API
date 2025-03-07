@@ -26,5 +26,6 @@ class FlashcardController(private val service: FlashcardService) {
     @DeleteMapping("/{id}")
     fun deleteFlashcard(@PathVariable id: String): Mono<Void> = service.deleteFlashcard(id)
 
-
+    @GetMapping("/random")
+    fun getRandomFlashcard(): Mono<Flashcard> = service.getRandomFlashcard()
 }

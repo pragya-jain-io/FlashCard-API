@@ -31,4 +31,10 @@ class FlashcardService( private val flashcardRepository: FlashcardRepository) {
 
     fun deleteFlashcard(id: String): Mono<Void> = flashcardRepository.deleteById(id)
 
+    fun getRandomFlashcard(): Mono<Flashcard> = flashcardRepository.findAll().collectList()
+        .flatMap { list ->
+            if (list.isNotEmpty()) Mono.just(list.random()) else Mono.empty()
+        }
+
+
 }

@@ -13,6 +13,8 @@ GET
 curl -X GET http://localhost:8080/api/flashcards
 *byId
 curl -X GET http://localhost:8080/api/flashcards/67c9974db9aeb94bd78230c5
+*Random
+curl -X GET http://localhost:8080/api/flashcards/random
 
 
 
