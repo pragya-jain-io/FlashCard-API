@@ -39,7 +39,7 @@ class FlashcardControllerTest @Autowired constructor(
     }
 
     @Test
-    fun `should create a flashcard`() {
+    fun createFlashcard() {
         val request = Flashcard(
             question = "What is Spring Boot?",
             answer = "A framework for building Java applications",

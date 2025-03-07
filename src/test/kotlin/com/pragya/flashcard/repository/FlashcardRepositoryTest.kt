@@ -26,7 +26,7 @@ class FlashcardRepositoryTest @Autowired constructor(
     }
 
     @Test
-    fun `should save and retrieve flashcard`() {
+    fun saveAndRetrieveFlashcard() {
         val flashcard = Flashcard(
             question = "What is Kotlin?",
             answer = "A modern JVM language",
@@ -44,7 +44,7 @@ class FlashcardRepositoryTest @Autowired constructor(
     }
 
     @Test
-    fun `should return empty for non-existing flashcard`() {
+    fun nonExistingFlashcard() {
         val result = repository.findById("non-existent-id").block()
         assertNull(result)
     }

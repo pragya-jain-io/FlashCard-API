@@ -37,7 +37,7 @@ class FlashcardServiceTest @Autowired constructor(
     }
 
     @Test
-    fun `should create a new flashcard`() {
+    fun createFlashcard() {
         val flashcard = Flashcard(
             question = "What is WebFlux?",
             answer = "A reactive web framework in Spring",
@@ -50,7 +50,7 @@ class FlashcardServiceTest @Autowired constructor(
     }
 
     @Test
-    fun `should find flashcard by ID`() {
+    fun findbyId() {
         val flashcard = repository.save(
             Flashcard(question = "What is Kotlin?", answer = "A JVM language")
         ).block()!!
@@ -61,13 +61,13 @@ class FlashcardServiceTest @Autowired constructor(
     }
 
     @Test
-    fun `should return null for non-existing flashcard`() {
+    fun nonExistingFlashcard() {
         val result = service.getFlashcardById("non-existent-id").block()
         assertNull(result)
     }
 
     @Test
-    fun `should update a flashcard`() {
+    fun updateFlashcard() {
         val flashcard = repository.save(
             Flashcard(question = "Initial", answer = "Test")
         ).block()!!
@@ -80,7 +80,7 @@ class FlashcardServiceTest @Autowired constructor(
     }
 
     @Test
-    fun `should delete a flashcard`() {
+    fun deleteFlashcard() {
         val flashcard = repository.save(
             Flashcard(question = "To be deleted", answer = "Test")
         ).block()!!
