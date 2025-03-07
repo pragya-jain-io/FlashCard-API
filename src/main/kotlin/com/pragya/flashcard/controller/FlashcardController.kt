@@ -28,4 +28,8 @@ class FlashcardController(private val service: FlashcardService) {
 
     @GetMapping("/random")
     fun getRandomFlashcard(): Mono<Flashcard> = service.getRandomFlashcard()
+
+    @GetMapping("/tags/{tag}")
+    fun getFlashcardsByTag(@PathVariable tag: String): Flux<Flashcard> =
+        service.getFlashcardsByTag(tag)
 }

@@ -36,5 +36,7 @@ class FlashcardService( private val flashcardRepository: FlashcardRepository) {
             if (list.isNotEmpty()) Mono.just(list.random()) else Mono.empty()
         }
 
+    fun getFlashcardsByTag(tag: String): Flux<Flashcard> =
+        flashcardRepository.findByTagsContaining(tag)
 
 }
