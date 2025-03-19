@@ -5,7 +5,7 @@ This is a **Reactive REST API** built using **Kotlin, Spring Boot, WebFlux, and 
 ## Features
 - Create, Read, Update, and Delete (CRUD) operations for flashcards
 - Reactive programming with WebFlux
-- MongoDB as the database
+- MongoDB for the database
 - Unit and integration tests
 
 ## Tech Stack
