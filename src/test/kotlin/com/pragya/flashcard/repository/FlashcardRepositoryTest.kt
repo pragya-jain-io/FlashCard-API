@@ -3,26 +3,23 @@ package com.pragya.flashcard.repository
 import com.pragya.flashcard.model.Flashcard
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import kotlin.test.Test
 
 @SpringBootTest
 @ExtendWith(SpringExtension::class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 class FlashcardRepositoryTest @Autowired constructor(
     private val repository: FlashcardRepository
 ) {
 
     @BeforeEach
     fun setup() {
-        repository.deleteAll().block() // Clear DB before each test
+        repository.deleteAll().block() // Ensure a clean database before each test
     }
 
     @Test
@@ -33,20 +30,21 @@ class FlashcardRepositoryTest @Autowired constructor(
             tags = listOf("Kotlin", "Programming")
         )
 
-        // Save flashcard
         val savedFlashcard = repository.save(flashcard).block()
-        assertNotNull(savedFlashcard?.id)
+        assertNotNull(savedFlashcard?.id, "Saved flashcard should have an ID")
 
-        // Retrieve flashcard
         val retrievedFlashcard = repository.findById(savedFlashcard!!.id!!).block()
-        assertEquals("What is Kotlin?", retrievedFlashcard?.question)
-        assertEquals("A modern JVM language", retrievedFlashcard?.answer)
+        assertNotNull(retrievedFlashcard, "Flashcard should be retrievable by ID")
+
+        with(retrievedFlashcard!!) {
+            assertEquals("What is Kotlin?", question)
+            assertEquals("A modern JVM language", answer)
+        }
     }
 
     @Test
     fun nonExistingFlashcard() {
-        val result = repository.findById("non-existent-id").block()
-        assertNull(result)
+        val retrievedFlashcard = repository.findById("non-existent-id").block()
+        assertNull(retrievedFlashcard, "Non-existing flashcard should return null")
     }
-
 }
